@@ -24,8 +24,9 @@ def get_headers():
     return headers
 
 def get_products(page_no, headers):
-    ver = math.floor(datetime.now().timestamp() * 1000)
     print(page_no)
+
+    ver = math.floor(datetime.now().timestamp() * 1000)
     req = requests.get(
         f'https://api.kurly.com/v1/home/timesale?page_limit=99&page_no={page_no}&delivery_type=0&sort_type=&ver={ver}',
         headers=headers)
@@ -35,7 +36,6 @@ def get_products(page_no, headers):
         return []
     
     result = []
-
     for product in products:
         result.append({
             'no': int(product['no']),
@@ -50,14 +50,12 @@ def get_products(page_no, headers):
         })
 
     for value in result:
-        if value['sticker']:
-            sticker = value['sticker']
-            value['sticker'] = ''
+        sticker = value['sticker']
+        value['sticker'] = ''
+        if sticker:
             for content in sticker['content']:
                 if content['text'].find('%'):
                     value['sticker'] = content['text']
-        else:
-            value['sticker'] = ''
     return result
 
 def insert_kury_items():
