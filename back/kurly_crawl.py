@@ -60,10 +60,9 @@ def get_products(page_no, headers):
 
 def insert_kury_items():
     db.init_kurly_item()
-
-    page_no = 1
+    
     headers = get_headers()
-    while True:
+    for page_no in range(1, 100):
         data = get_products(page_no, headers)
         if len(data) == 0:
             break
@@ -71,8 +70,6 @@ def insert_kury_items():
         for value in data:
             if value['is_sold_out'] == False and value['is_pet'] == False:
                 db.insert_kurly_item(value)
-
-        page_no = page_no + 1
 
 def delete_items_by_keyword():
     for row in db.get_ban_keyword():
