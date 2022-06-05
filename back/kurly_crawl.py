@@ -8,7 +8,7 @@ def check_work_availability():
     deal_info = db.get_latest_deal_info("crawl")
     if deal_info:
         delta = math.floor(datetime.now().timestamp()) - deal_info['deal_timestamp']
-        if delta < 300:
+        if delta < 5 * 60:
             print("5분 내에 탐색 작업을 수행한 이력이 있습니다 : " + str(delta) + "s")
             exit()
 
