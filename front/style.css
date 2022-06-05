@@ -1,0 +1,62 @@
+li {
+    max-width: 250px;
+    margin-top: 20px;
+    padding: 5px;
+    border: 2px;
+    border-style: solid;
+    border-color: white;
+}
+
+li:hover {
+    border-color: goldenrod;
+}
+
+.img {
+    max-width: 100%;
+    display: block;
+}
+
+span {
+    display: block;
+}
+
+ul {
+    position: relative;
+    padding-left:0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.item-name {
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+
+.item-price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+.remove-button {
+    float: right;
+}
+
+.refresh-button {
+    float: right;
+    margin-right: 10px;
+}
+
+.refresh-div {
+    float: right;
+    margin-right: 10px;
+}
