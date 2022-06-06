@@ -1,4 +1,6 @@
 import KurlyTimeSaleList from './KurlyTimeSaleList.js'
+import KurlyTimeSaleRefresh from './KurlyTimeSaleRefresh.js'
+import ProcessWaitingDivision from './ProcessWaitingDivision.js'
 import { deleteTimeSaleData, fetchTimeSaleData, refreshKurlyItems } from './api.js'
 
 export default function App({ $target }) {
@@ -12,32 +14,38 @@ export default function App({ $target }) {
         this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(item => item.no != id);
         setState(this.state);
     }
-    
-    const $kurlyRefreshButton = document.createElement('button');
-    $kurlyRefreshButton.className = 'refresh-button';
-    $kurlyRefreshButton.innerText = "refresh";
-    $kurlyRefreshButton.addEventListener('click', () => {
-        refreshItems();
-    });
-    $target.appendChild($kurlyRefreshButton);
 
-    const $kurlyRefreshDiv = document.createElement('div');
-    $kurlyRefreshDiv.className = 'refresh-div';
-    $target.appendChild($kurlyRefreshDiv);
-    
-    const kurlyTimeSaleList = new KurlyTimeSaleList({ $target, initialState:this.state, params:{onRemove:this.onRemove} });
+    this.refreshItems = async () => {
+        removeAllItems();
+        processWaitingDivision.setVisible(true);
+        kurlyTimeSaleRefresh.setVisible(false);
 
-    const initialize = async () => {
-        const timeSaleData = await fetchTimeSaleData();
-        setState(JSON.parse(timeSaleData));
+        await refreshKurlyItems();
+        getKurlySaleData();
+        processWaitingDivision.setVisible(false);
+        kurlyTimeSaleRefresh.setVisible(true);
     }
 
-    const refreshItems = async () => {
-        this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(item => false);
-        setState(this.state);
+    const kurlyTimeSaleRefresh = new KurlyTimeSaleRefresh({ 
+        $target, 
+        initialState: { lastestCrawlDate: this.state.lastestCrawlDate },
+        params: { refreshItems: this.refreshItems }
+    });
 
-        const result = await refreshKurlyItems();
-        initialize();
+    const kurlyTimeSaleList = new KurlyTimeSaleList({
+        $target,
+        initialState: { kurlyTimeSaleData: this.state.kurlyTimeSaleData },
+        params: { onRemove: this.onRemove }
+    });
+
+    const processWaitingDivision = new ProcessWaitingDivision({
+        $target,
+        initialState: null
+    });
+
+    const getKurlySaleData = async () => {
+        const timeSaleData = await fetchTimeSaleData();
+        setState(JSON.parse(timeSaleData));
     }
 
     const setState = (newState) => {
@@ -45,8 +53,13 @@ export default function App({ $target }) {
         kurlyTimeSaleList.setState(newState.kurlyTimeSaleData);
 
         this.state.lastestCrawlDate = newState.lastestCrawlDate;        
-        $kurlyRefreshDiv.innerHTML = "최종 갱신 시각 : " + newState.lastestCrawlDate.replace(/[.].+/, "");
+        kurlyTimeSaleRefresh.setState({ lastestCrawlDate: newState.lastestCrawlDate.replace(/[.].+/, "") });
     }
 
-    initialize();
+    const removeAllItems = () => {
+        this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(item => false);
+        setState(this.state);
+    }
+
+    getKurlySaleData();
 }

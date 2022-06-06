@@ -25,7 +25,8 @@ export default function KurlyTimeSaleList({ $target, initialState, params }) {
                 <a href='https://www.kurly.com/shop/goods/goods_view.php?&goodsno=${item.no}' target="blank">
                 <img src=${item.img} loading="lazy" class="img">
                 <span class="item-name">${item.name}</span>
-                <span class="item-price">${item.price} (${item.discount_percent}%)</span>
+                <span class="item-price">${addCommaToDecimal(item.price)}</span>
+                <span class="item-discount-percent">(${item.discount_percent}%)</span>
                 <span>${item.sticker}</span></a>
                 <button class="remove-button">ban</button></li>`
             ).join('')}`;
@@ -35,5 +36,9 @@ export default function KurlyTimeSaleList({ $target, initialState, params }) {
     this.setState = (nextState) => {
         this.state = nextState;
         this.render();
+    }
+
+    const addCommaToDecimal = (number) => {
+        return number.toLocaleString('ko-KR');
     }
 }

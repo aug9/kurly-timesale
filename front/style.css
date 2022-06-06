@@ -16,10 +16,6 @@ li:hover {
     display: block;
 }
 
-span {
-    display: block;
-}
-
 ul {
     position: relative;
     padding-left:0;
@@ -33,6 +29,8 @@ ul {
 .item-name {
     font-size: 1.3em;
     font-weight: 500;
+    color: #333;
+    display: block;
 }
 
 a:hover, a:visited, a:link, a:active
@@ -45,8 +43,16 @@ a:hover, a:visited, a:link, a:active
     font-weight: bold;
     color: #333;
     text-decoration: none;
+    /* display: block; */
 }
 
+.item-discount-percent {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: chocolate;
+    text-decoration: none;
+    /* display: block; */
+}
 .remove-button {
     float: right;
 }
@@ -59,4 +65,18 @@ a:hover, a:visited, a:link, a:active
 .refresh-div {
     float: right;
     margin-right: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.refresh-process-div {
+    font-size: 2em;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+    align-items: center;
 }
