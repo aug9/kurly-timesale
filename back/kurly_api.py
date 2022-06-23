@@ -27,7 +27,9 @@ def add_ban_keyword(params):
     print(params)
     
     if ('ban_keyword' in params):
+        ban_keyword = params['ban_keyword']
         db.make_connection()
-        db.insert_ban_keyword(params['ban_keyword'])
+        db.insert_ban_keyword(ban_keyword)
+        db.delete_item_by_keyword(ban_keyword)
 
     return json.dumps({'result': 'ok'})
