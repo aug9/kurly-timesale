@@ -1,9 +1,13 @@
-const END_POINT = "http://localhost:8011/kurly";
-const REFRESH_END_POINT = "http://localhost:8011/kurly-refresh";
-const BAN_END_POINT = "http://localhost:8011/kurly-ban";
+const IP = "localhost";
+const PORT = "8011";
+const BASIC_END_POINT = `http://${IP}:${PORT}/`;
+const KURLY_END_POINT = `${BASIC_END_POINT}/kurly`;
+const REFRESH_END_POINT = `${BASIC_END_POINT}/kurly-refresh`;
+const BAN_END_POINT = `${BASIC_END_POINT}/kurly-ban`;
 
 export function fetchTimeSaleData(params) {
-  const url = END_POINT + (params ? "?" + new URLSearchParams(params) : "");
+  const url =
+    KURLY_END_POINT + (params ? "?" + new URLSearchParams(params) : "");
 
   return fetch(url, { method: "GET" })
     .then((response) => response.json())
@@ -13,7 +17,7 @@ export function fetchTimeSaleData(params) {
 }
 
 export function deleteTimeSaleData(no) {
-  const url = END_POINT + ("?no=" + no);
+  const url = KURLY_END_POINT + ("?no=" + no);
 
   return fetch(url, { method: "DELETE" })
     .then((response) => response.json())
