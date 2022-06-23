@@ -23,14 +23,21 @@ class Kurly_refresh(Resource):
     def post(self):
         print(request.headers)
         print(request.remote_addr)
-        print("post")
         return kurly_crawl.crawl()
 
+
+@api.route('/kurly-ban')
+class Kurly_Ban(Resource):
+    def post(self):
+        print(request.headers)
+        print(request.remote_addr)
+        return kurly_api.add_ban_keyword(request.get_json())
 
 @app.after_request
 def add_security_headers(resp):
     resp.headers['access-control-allow-origin'] = '*'
-    resp.headers['Access-Control-Allow-Methods'] = 'GET, DELETE'
+    resp.headers['Access-Control-Allow-Methods'] = '*'
+    resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
     return resp
 
 if __name__ == "__main__":

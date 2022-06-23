@@ -1,82 +1,109 @@
 li {
-    max-width: 250px;
-    margin-top: 20px;
-    padding: 5px;
-    border: 2px;
-    border-style: solid;
-    border-color: white;
+  max-width: 250px;
+  margin-top: 20px;
+  padding: 5px;
+  border: 2px;
+  border-style: solid;
+  border-color: white;
 }
 
 li:hover {
-    border-color: goldenrod;
+  border-color: goldenrod;
 }
 
 .img {
-    max-width: 100%;
-    display: block;
+  max-width: 100%;
+  display: block;
 }
 
 ul {
-    position: relative;
-    padding-left:0;
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 100%;
+  position: relative;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .item-name {
-    font-size: 1.3em;
-    font-weight: 500;
-    color: #333;
-    display: block;
+  font-size: 1.3em;
+  font-weight: 500;
+  color: #333;
+  display: block;
 }
 
-a:hover, a:visited, a:link, a:active
-{
-    text-decoration: none;
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
 }
 
 .item-price {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-    /* display: block; */
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  /* display: block; */
 }
 
 .item-discount-percent {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: chocolate;
-    text-decoration: none;
-    /* display: block; */
+  font-size: 1.3em;
+  font-weight: bold;
+  color: chocolate;
+  text-decoration: none;
+  /* display: block; */
 }
 .remove-button {
-    float: right;
+  float: right;
 }
 
 .refresh-button {
-    float: right;
-    margin-right: 10px;
+  float: right;
+  margin-right: 10px;
 }
 
-.refresh-div {
-    float: right;
-    margin-right: 10px;
+.refresh-time-div {
+  float: right;
+  margin-right: 10px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .refresh-process-div {
-    font-size: 2em;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    justify-content: center;
-    align-items: center;
+  font-size: 2em;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.ban-keyword-div {
+  position: fixed;
+  background-color: white;
+  z-index: 1;
+  width: 100%;
+  height: 40px;
+  top: 0;
+  padding-top: 10px;
+}
+
+.refresh-div {
+  position: fixed;
+  background-color: white;
+  z-index: 2;
+  left: 50%;
+  width: 50%;
+  height: 40px;
+  top: 0;
+  padding-top: 10px;
+}
+
+.kurly-list-body {
+  padding-top: 20px;
 }

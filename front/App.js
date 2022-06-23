@@ -1,65 +1,92 @@
-import KurlyTimeSaleList from './KurlyTimeSaleList.js'
-import KurlyTimeSaleRefresh from './KurlyTimeSaleRefresh.js'
-import ProcessWaitingDivision from './ProcessWaitingDivision.js'
-import { deleteTimeSaleData, fetchTimeSaleData, refreshKurlyItems } from './api.js'
+import KurlyTimeSaleList from "./KurlyTimeSaleList.js";
+import KurlyTimeSaleRefresh from "./KurlyTimeSaleRefresh.js";
+import ProcessWaitingDivision from "./ProcessWaitingDivision.js";
+import KurlyBanKeyword from "./KurlyBanKeyword.js";
+import {
+  deleteTimeSaleData,
+  fetchTimeSaleData,
+  refreshKurlyItems,
+  insertBanKeyword,
+} from "./api.js";
 
 export default function App({ $target }) {
-    this.state = {
-        kurlyTimeSaleData: null,
-        lastestCrawlDate: null
-    };
+  this.state = {
+    kurlyTimeSaleData: null,
+    lastestCrawlDate: null,
+  };
 
-    this.onRemove = async (id) => {
-        const result = await deleteTimeSaleData(id);
-        this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(item => item.no != id);
-        setState(this.state);
-    }
+  this.onRemove = async (id) => {
+    const result = await deleteTimeSaleData(id);
+    this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(
+      (item) => item.no != id
+    );
+    setState(this.state);
+  };
 
-    this.refreshItems = async () => {
-        removeAllItems();
-        processWaitingDivision.setVisible(true);
-        kurlyTimeSaleRefresh.setVisible(false);
+  this.insertBanKeyword = async (keyword) => {
+    const result = await insertBanKeyword(keyword);
+    this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(
+      (item) => item.name.indexOf(keyword) < 0
+    );
 
-        await refreshKurlyItems();
-        getKurlySaleData();
-        processWaitingDivision.setVisible(false);
-        kurlyTimeSaleRefresh.setVisible(true);
-    }
+    setState(this.state);
+  };
 
-    const kurlyTimeSaleRefresh = new KurlyTimeSaleRefresh({ 
-        $target, 
-        initialState: { lastestCrawlDate: this.state.lastestCrawlDate },
-        params: { refreshItems: this.refreshItems }
-    });
+  this.refreshItems = async () => {
+    removeAllItems();
+    processWaitingDivision.setVisible(true);
+    kurlyTimeSaleRefresh.setVisible(false);
 
-    const kurlyTimeSaleList = new KurlyTimeSaleList({
-        $target,
-        initialState: { kurlyTimeSaleData: this.state.kurlyTimeSaleData },
-        params: { onRemove: this.onRemove }
-    });
-
-    const processWaitingDivision = new ProcessWaitingDivision({
-        $target,
-        initialState: null
-    });
-
-    const getKurlySaleData = async () => {
-        const timeSaleData = await fetchTimeSaleData();
-        setState(JSON.parse(timeSaleData));
-    }
-
-    const setState = (newState) => {
-        this.state.kurlyTimeSaleData = newState.kurlyTimeSaleData;
-        kurlyTimeSaleList.setState(newState.kurlyTimeSaleData);
-
-        this.state.lastestCrawlDate = newState.lastestCrawlDate;        
-        kurlyTimeSaleRefresh.setState({ lastestCrawlDate: newState.lastestCrawlDate.replace(/[.].+/, "") });
-    }
-
-    const removeAllItems = () => {
-        this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(item => false);
-        setState(this.state);
-    }
-
+    await refreshKurlyItems();
     getKurlySaleData();
+    processWaitingDivision.setVisible(false);
+    kurlyTimeSaleRefresh.setVisible(true);
+  };
+
+  const kurlyBanKeyword = new KurlyBanKeyword({
+    $target,
+    initialState: {},
+    params: { onInput: this.insertBanKeyword },
+  });
+
+  const kurlyTimeSaleRefresh = new KurlyTimeSaleRefresh({
+    $target,
+    initialState: { lastestCrawlDate: this.state.lastestCrawlDate },
+    params: { refreshItems: this.refreshItems },
+  });
+
+  const kurlyTimeSaleList = new KurlyTimeSaleList({
+    $target,
+    initialState: { kurlyTimeSaleData: this.state.kurlyTimeSaleData },
+    params: { onRemove: this.onRemove },
+  });
+
+  const processWaitingDivision = new ProcessWaitingDivision({
+    $target,
+    initialState: null,
+  });
+
+  const getKurlySaleData = async () => {
+    const timeSaleData = await fetchTimeSaleData();
+    setState(JSON.parse(timeSaleData));
+  };
+
+  const setState = (newState) => {
+    this.state.kurlyTimeSaleData = newState.kurlyTimeSaleData;
+    kurlyTimeSaleList.setState(newState.kurlyTimeSaleData);
+
+    this.state.lastestCrawlDate = newState.lastestCrawlDate;
+    kurlyTimeSaleRefresh.setState({
+      lastestCrawlDate: newState.lastestCrawlDate.replace(/[.].+/, ""),
+    });
+  };
+
+  const removeAllItems = () => {
+    this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(
+      (item) => false
+    );
+    setState(this.state);
+  };
+
+  getKurlySaleData();
 }

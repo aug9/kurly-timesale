@@ -55,7 +55,17 @@ def delete_kurly_items(no):
         print ('exception occured')
         print(type(e))
         print(e)
-        
+
+def insert_ban_keyword(keyword):
+    try:
+        sql = "INSERT INTO ban_keyword (keyword) VALUES (?)"
+        cursor.execute(sql, (keyword, ))
+        conn.commit()
+    except Exception as e:
+        print ('exception occured')
+        print(type(e))
+        print(e)
+
 def get_ban_keyword():
     try:
         sql = "SELECT keyword FROM ban_keyword"

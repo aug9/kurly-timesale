@@ -22,3 +22,12 @@ def delete(params):
     db.delete_kurly_items(params['no'])
 
     return json.dumps({'result': 'ok'})
+
+def add_ban_keyword(params):
+    print(params)
+    
+    if ('ban_keyword' in params):
+        db.make_connection()
+        db.insert_ban_keyword(params['ban_keyword'])
+
+    return json.dumps({'result': 'ok'})

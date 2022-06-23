@@ -1,32 +1,37 @@
-export default function KurlyTimeSaleRefresh({ $target, initialState, params }) {
-    this.state = initialState;
+export default function KurlyTimeSaleRefresh({
+  $target,
+  initialState,
+  params,
+}) {
+  this.state = initialState;
 
-    const $kurlyRefreshDiv = document.createElement('div');
-    $target.appendChild($kurlyRefreshDiv);
+  const $kurlyRefreshDiv = document.createElement("div");
+  $kurlyRefreshDiv.className = "refresh-div";
+  $target.appendChild($kurlyRefreshDiv);
 
-    const $kurlyRefreshButton = document.createElement('button');
-    $kurlyRefreshButton.className = 'refresh-button';
-    $kurlyRefreshButton.innerText = "refresh";
-    $kurlyRefreshDiv.appendChild($kurlyRefreshButton);
+  const $kurlyRefreshButton = document.createElement("button");
+  $kurlyRefreshButton.className = "refresh-button";
+  $kurlyRefreshButton.innerText = "refresh";
+  $kurlyRefreshDiv.appendChild($kurlyRefreshButton);
 
-    $kurlyRefreshButton.addEventListener('click', () => {
-        if (params && params.refreshItems) params.refreshItems();
-    });
-    
-    const $kurlyRefreshDate = document.createElement('div');
-    $kurlyRefreshDate.className = 'refresh-div';
-    $kurlyRefreshDiv.appendChild($kurlyRefreshDate);
+  $kurlyRefreshButton.addEventListener("click", () => {
+    if (params && params.refreshItems) params.refreshItems();
+  });
 
-    this.render = () => {
-        $kurlyRefreshDate.innerHTML = `최종 변경 시각 : ${this.state.lastestCrawlDate}`;
-    }
+  const $kurlyRefreshDate = document.createElement("div");
+  $kurlyRefreshDate.className = "refresh-time-div";
+  $kurlyRefreshDiv.appendChild($kurlyRefreshDate);
 
-    this.setState = (nextState) => {
-        this.state = nextState;
-        this.render();
-    }
+  this.render = () => {
+    $kurlyRefreshDate.innerHTML = `최종 변경 시각 : ${this.state.lastestCrawlDate}`;
+  };
 
-    this.setVisible = (isVisible) => {
-        $kurlyRefreshDiv.className = isVisible ? '' : 'hidden';
-    }
+  this.setState = (nextState) => {
+    this.state = nextState;
+    this.render();
+  };
+
+  this.setVisible = (isVisible) => {
+    $kurlyRefreshDiv.className = isVisible ? "" : "hidden";
+  };
 }
