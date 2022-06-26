@@ -4,3 +4,7 @@
 
 - 백엔드 : Python, Flask
 - 프론트엔드 : Vanilla JS
+
+스크린샷
+
+<img width="1680" alt="스크린샷 2022-06-26 오후 7 37 09" src="https://user-images.githubusercontent.com/91299806/175810396-408fa1cc-ba08-42f7-9beb-91756a28f155.png">
