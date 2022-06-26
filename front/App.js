@@ -51,13 +51,13 @@ export default function App({ $target }) {
 
   const kurlyTimeSaleRefresh = new KurlyTimeSaleRefresh({
     $target,
-    initialState: { lastestCrawlDate: this.state.lastestCrawlDate },
+    initialState: this.state
     params: { refreshItems: this.refreshItems },
   });
 
   const kurlyTimeSaleList = new KurlyTimeSaleList({
     $target,
-    initialState: { kurlyTimeSaleData: this.state.kurlyTimeSaleData },
+    initialState: this.state
     params: { onRemove: this.removeItem },
   });
 
