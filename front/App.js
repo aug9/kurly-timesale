@@ -77,7 +77,7 @@ export default function App({ $target }) {
 
     this.state.lastestCrawlDate = newState.lastestCrawlDate;
     kurlyTimeSaleRefresh.setState({
-      lastestCrawlDate: newState.lastestCrawlDate.replace(/[.].+/, ""),
+      lastestCrawlDate: removeMillisecondString(newState.lastestCrawlDate),
     });
   };
 
@@ -87,6 +87,9 @@ export default function App({ $target }) {
     );
     setState(this.state);
   };
+
+  const removeMillisecondString = (dateString) =>
+    dateString.replace(/[.].+/, "");
 
   getKurlySaleData();
 }
