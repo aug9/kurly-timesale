@@ -86,8 +86,8 @@ export default function App({ $target }) {
     this.state.kurlyTimeSaleData = newState.kurlyTimeSaleData;
     this.state.lastestCrawlDate = newState.lastestCrawlDate;
 
-    kurlyTimeSaleList.setState(this.state.kurlyTimeSaleData);
-    kurlyTimeSaleRefresh.setState(this.state.lastestCrawlDate);
+    kurlyTimeSaleList.setState(this.state);
+    kurlyTimeSaleRefresh.setState(this.state);
   };
 
   const removeAllItems = () => {

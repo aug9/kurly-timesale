@@ -18,7 +18,7 @@ export default function KurlyTimeSaleList({ $target, initialState, params }) {
   });
 
   this.render = () => {
-    const kurlyTimeSaleData = this.state;
+    const kurlyTimeSaleData = this.state.kurlyTimeSaleData;
     const contextHtml = `
             ${kurlyTimeSaleData
               .map(
