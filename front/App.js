@@ -67,15 +67,24 @@ export default function App({ $target }) {
   });
 
   const getKurlySaleData = async () => {
+    const removeMillisecondString = (dateString) =>
+      dateString.replace(/[.].+/, "");
+
     const timeSaleData = await fetchTimeSaleData();
-    setState(JSON.parse(timeSaleData));
+    const timeSaleJsonData = JSON.parse(timeSaleData);
+
+    if (typeof timeSaleJsonData.lastestCrawlDate === "string") {
+      timeSaleJsonData.lastestCrawlDate = removeMillisecondString(
+        timeSaleJsonData.lastestCrawlDate
+      );
+    }
+
+    setState(timeSaleJsonData);
   };
 
   const setState = (newState) => {
     this.state.kurlyTimeSaleData = newState.kurlyTimeSaleData;
-    this.state.lastestCrawlDate = removeMillisecondString(
-      newState.lastestCrawlDate
-    );
+    this.state.lastestCrawlDate = newState.lastestCrawlDate;
 
     kurlyTimeSaleList.setState(this.state.kurlyTimeSaleData);
     kurlyTimeSaleRefresh.setState(this.state.lastestCrawlDate);
@@ -87,9 +96,6 @@ export default function App({ $target }) {
     );
     setState(this.state);
   };
-
-  const removeMillisecondString = (dateString) =>
-    dateString.replace(/[.].+/, "");
 
   getKurlySaleData();
 }
