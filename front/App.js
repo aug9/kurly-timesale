@@ -15,7 +15,7 @@ export default function App({ $target }) {
     lastestCrawlDate: null,
   };
 
-  this.onRemove = async (id) => {
+  this.removeItem = async (id) => {
     const result = await deleteTimeSaleData(id);
     this.state.kurlyTimeSaleData = this.state.kurlyTimeSaleData.filter(
       (item) => item.no != id
@@ -58,7 +58,7 @@ export default function App({ $target }) {
   const kurlyTimeSaleList = new KurlyTimeSaleList({
     $target,
     initialState: { kurlyTimeSaleData: this.state.kurlyTimeSaleData },
-    params: { onRemove: this.onRemove },
+    params: { onRemove: this.removeItem },
   });
 
   const processWaitingDivision = new ProcessWaitingDivision({
