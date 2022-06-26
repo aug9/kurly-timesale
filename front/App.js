@@ -76,9 +76,7 @@ export default function App({ $target }) {
     setState(timeSaleJsonData);
 
     function removeMillisecondString(date) {
-      return typeof timeSaleJsonData.lastestCrawlDate === "string"
-        ? date.replace(/[.].+/, "")
-        : date;
+      return typeof date === "string" ? date.replace(/[.].+/, "") : date;
     }
   };
 
