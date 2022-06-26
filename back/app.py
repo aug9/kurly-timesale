@@ -10,19 +10,16 @@ api = Api(app)  # Flask 객체에 Api 객체 등록
 class Kurly(Resource):
     def get(self):
         print(request.headers)
-        print(request.remote_addr)
         return kurly_api.get(request.args.to_dict())
 
     def delete(self):
         print(request.headers)
-        print(request.remote_addr)
         return kurly_api.delete(request.args.to_dict())
 
 @api.route('/kurly-refresh')
 class Kurly_refresh(Resource):
     def post(self):
         print(request.headers)
-        print(request.remote_addr)
         return kurly_crawl.crawl()
 
 
@@ -30,7 +27,6 @@ class Kurly_refresh(Resource):
 class Kurly_Ban(Resource):
     def post(self):
         print(request.headers)
-        print(request.remote_addr)
         return kurly_api.add_ban_keyword(request.get_json())
 
 @app.after_request
