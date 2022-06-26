@@ -67,19 +67,19 @@ export default function App({ $target }) {
   });
 
   const getKurlySaleData = async () => {
-    const removeMillisecondString = (dateString) =>
-      dateString.replace(/[.].+/, "");
-
     const timeSaleData = await fetchTimeSaleData();
     const timeSaleJsonData = JSON.parse(timeSaleData);
-
-    if (typeof timeSaleJsonData.lastestCrawlDate === "string") {
-      timeSaleJsonData.lastestCrawlDate = removeMillisecondString(
-        timeSaleJsonData.lastestCrawlDate
-      );
-    }
+    timeSaleJsonData.lastestCrawlDate = removeMillisecondString(
+      timeSaleJsonData.lastestCrawlDate
+    );
 
     setState(timeSaleJsonData);
+
+    function removeMillisecondString(date) {
+      return typeof timeSaleJsonData.lastestCrawlDate === "string"
+        ? date.replace(/[.].+/, "")
+        : date;
+    }
   };
 
   const setState = (newState) => {
