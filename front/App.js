@@ -42,15 +42,18 @@ export default function App({ $target }) {
     processWaitingDivision.setVisible(false);
     kurlyTimeSaleRefresh.setVisible(true);
   };
+  const $topContainer = document.createElement("div");
+  $topContainer.className = "top-container";
+  $target.appendChild($topContainer);
 
   const kurlyBanKeyword = new KurlyBanKeyword({
-    $target,
+    $target: $topContainer,
     initialState: {},
     params: { onInput: this.insertBanKeyword },
   });
 
   const kurlyTimeSaleRefresh = new KurlyTimeSaleRefresh({
-    $target,
+    $target: $topContainer,
     initialState: this.state,
     params: { refreshItems: this.refreshItems },
   });
@@ -76,7 +79,9 @@ export default function App({ $target }) {
     setState(timeSaleJsonData);
 
     function removeMillisecondString(date) {
-      return typeof date === "string" ? date.replace(/[.].+/, "") : date;
+      return typeof timeSaleJsonData.lastestCrawlDate === "string"
+        ? date.replace(/[.].+/, "")
+        : date;
     }
   };
 
