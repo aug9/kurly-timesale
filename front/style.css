@@ -98,7 +98,7 @@ a:active {
 }
 
 .top-container {
-  position: fixed;
+  position: sticky;
   top: 0px;
   height: 40px;
   padding: 10px;
