@@ -37,7 +37,7 @@ export default function KurlyTimeSaleList({ $target, initialState, params }) {
                 <button class="remove-button">ban</button></li>`
               )
               .join("")}`;
-    $kurlyTimeSaleList.innerHTML = "<ul>" + contextHtml + "</ul>";
+    $kurlyTimeSaleList.innerHTML = `<ul>${contextHtml}</ul>`;
   };
 
   this.setState = (nextState) => {
