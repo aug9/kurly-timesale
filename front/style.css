@@ -1,6 +1,6 @@
 li {
   max-width: 250px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 5px;
   border: 2px;
   border-style: solid;
@@ -45,7 +45,6 @@ a:active {
   font-weight: bold;
   color: #333;
   text-decoration: none;
-  /* display: block; */
 }
 
 .item-discount-percent {
@@ -53,13 +52,9 @@ a:active {
   font-weight: bold;
   color: chocolate;
   text-decoration: none;
-  /* display: block; */
 }
 .remove-button {
   float: right;
-}
-
-.refresh-button {
 }
 
 .refresh-time-div {
@@ -83,13 +78,11 @@ a:active {
 .ban-keyword-div {
   background-color: white;
   padding-top: 0.24em;
-  grid-area: left-top;
+  flex: 1;
 }
 
 .refresh-div {
   background-color: white;
-  width: 350px;
-  grid-area: right-top;
   vertical-align: bottom;
 }
 
@@ -101,7 +94,7 @@ a:active {
   position: sticky;
   top: 0px;
   height: 40px;
-  padding: 10px;
+  padding-top: 10px;
   width: 100%;
   display: flex;
   flex-direction: row;
