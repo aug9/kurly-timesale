@@ -26,7 +26,7 @@ export default function KurlyTimeSaleList({ $target, initialState, params }) {
                   `<li data-id="${item.no}">
                 <a href='https://www.kurly.com/shop/goods/goods_view.php?&goodsno=${
                   item.no
-                }' target="blank">
+                }' target="blank" rel="noopener noreferrer">
                 <img src=${item.img} loading="lazy" class="img">
                 <span class="item-name">${item.name}</span>
                 <span class="item-price">${addCommaToDecimal(item.price)}</span>
