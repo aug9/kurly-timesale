@@ -15,23 +15,19 @@ def check_work_availability():
     db.insert_deal_info("crawl")
 
 def get_headers():
-    req = requests.get(f'https://www.kurly.com/shop/goods/goods_list.php?list=sale') 
-    text = req.text
-
-    p = re.compile("jwtToken[^']+'([^']+)'")
-    m = p.findall(text)
-    headers = {'authorization': 'Bearer ' + m[0]}
+    req = requests.get(f'https://www.kurly.com/nx/api/session') 
+    data = req.json()
+    print(data['accessToken'])
+    headers = {'authorization': 'Bearer ' + data['accessToken']}
     return headers
 
 def get_products(page_no, headers):
     print(page_no)
-
-    ver = math.floor(datetime.now().timestamp() * 1000)
     req = requests.get(
-        f'https://api.kurly.com/v1/home/timesale?page_limit=99&page_no={page_no}&delivery_type=0&sort_type=&ver={ver}',
-        headers=headers)
+      f'https://api.kurly.com/showroom/v2/products/time-sale?sort_type=&page={page_no}&per_page=99',
+      headers=headers)
     data = req.json()
-    products = data['data']['products']
+    products = data['data']
     if len(products) == 0:
         return []
     
@@ -40,13 +36,12 @@ def get_products(page_no, headers):
         result.append({
             'no': int(product['no']),
             'name': product['name'],
-            'price': int(product['price']),
-            'discount_percent': int(product['discount_percent']),
-            'desc': product['shortdesc'],
-            'img': product['thumbnail_image_url'],
+            'price': int(product['discounted_price']),
+            'discount_percent': int(product['discount_rate']),
+            'desc': product['short_description'],
+            'img': product['list_image_url'],
             'sticker': product['sticker'],
             'is_sold_out': product['is_sold_out'],
-            'is_pet': product['is_pet'],
         })
 
     for value in result:
@@ -60,7 +55,6 @@ def get_products(page_no, headers):
 
 def insert_kury_items():
     db.init_kurly_item()
-    
     headers = get_headers()
     for page_no in range(1, 100):
         data = get_products(page_no, headers)
@@ -68,7 +62,7 @@ def insert_kury_items():
             break
 
         for value in data:
-            if value['is_sold_out'] == False and value['is_pet'] == False:
+            if value['is_sold_out'] == False:
                 db.insert_kurly_item(value)
 
 def delete_items_by_keyword():
