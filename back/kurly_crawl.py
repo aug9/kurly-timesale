@@ -33,11 +33,20 @@ def get_products(page_no, headers):
     
     result = []
     for product in products:
+        print(product)
+        discount_rate = product['discount_rate']
+        if type(discount_rate) != int:
+          continue
+
+        price = product['discounted_price']
+        if type(price) != int:
+          price = int(product['sales_price']) * (100 - discount_rate) / 100
+
         result.append({
             'no': int(product['no']),
             'name': product['name'],
-            'price': int(product['discounted_price']),
-            'discount_percent': int(product['discount_rate']),
+            'price': price,
+            'discount_percent': discount_rate,
             'desc': product['short_description'],
             'img': product['list_image_url'],
             'sticker': product['sticker'],
